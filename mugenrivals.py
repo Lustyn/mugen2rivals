@@ -267,7 +267,7 @@ def main(folder):
     air_path = glob.glob(folder + "/*.air")[0]
     if not os.path.exists("working"):
         os.makedirs("working")
-    subprocess.run(["mugen/sff2png.exe", sff_path, "working/outfile", "-f 0"])
+    subprocess.run(["mugen/sff2png.exe", sff_path, "working/outfile"])
     outfile_path = "working/outfile-sff.def" 
     if not os.path.exists(folder + "_output"):
         os.makedirs(folder + "_output")
@@ -279,6 +279,8 @@ def main(folder):
     #create the rival files from the mugen data
     filename_dict = {}
     for action_nb, frames in airfile.items():
+        if not frames:
+            continue
         width, height = build_spritesheet(outfile, action_nb, frames, outfolder, filename_dict)
         if width > max_width:
             max_width = width
